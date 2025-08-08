@@ -40,7 +40,7 @@ body {
 </style>
 <template>
     <aside style="margin-top: -5px; padding-top: 100px;background-image:linear-gradient(to top, var(--ci-gray-dark), var(--card-color-dark));"  :class="[
-              sidebar === true ? 'translate-x-0 lg:w-[65px] w-[100%]' : '-translate-x-full lg:translate-x-0 lg:w-[280px] w-[100%]',
+              sidebar === true ? 'translate-x-0 lg:w-[65px] w-[100%]' : '-translate-x-full lg:translate-x-0 lg:w-[] w-[100%]',
             ]" class="fixed left-0 z-20 top-0 pt-16 overflow-auto h-screen transition-transform" aria-label="Sidebar">
 
         <div v-if="!sidebar" class="h-full pb-4 overflow-y-auto pb-4 tirar-cedo" style="background-image:linear-gradient(to bottom, var(--ci-gray-dark), var(--card-color-dark), var(--ci-gray-dark));border-right: 1px solid #27292A;">

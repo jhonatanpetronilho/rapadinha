@@ -2,12 +2,12 @@
   <div class="min-h-screen flex flex-col bg-[#171717]">
     <NavTopComponent :simple="false" />
 
-    <!-- CONTAINER DO CONTEÚDO PRINCIPAL (centralizado com margem lateral equilibrada) -->
-    <div class="lg:mt-[65px] sm:mt-[25px] mt-[55px] flex-1">
-      <div 
-        :class="[ sidebar === true ? 'lg:ml-[65px] lg:mr-[65px]' : 'lg:ml-[280px] lg:mr-[280px]']"
-        class="relative"
-      >
+    <!-- CONTAINER DO CONTEÚDO PRINCIPAL (com margem lateral) -->
+    <div
+      :class="[ sidebar === true ? 'lg:ml-[65px]' : '']"
+      class="lg:mt-[65px] sm:mt-[25px] mt-[55px] flex-1"
+    >
+      <div class="relative">
         <slot></slot>
       </div>
     </div>

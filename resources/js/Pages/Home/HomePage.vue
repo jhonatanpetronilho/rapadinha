@@ -83,7 +83,7 @@ body { background: none; }
     overflow: hidden;
     border: 1px solid var(--border-color);
     transition: transform 0.3s, box-shadow 0.3s;
-    flex: 0 0 280px;
+    flex: 0 0 ;
     display: flex;
     flex-direction: column;
 }

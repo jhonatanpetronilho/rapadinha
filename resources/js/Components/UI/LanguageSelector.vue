@@ -60,8 +60,8 @@
 <!--                </div>-->
             </div>
             <div>
-                <img :src="`/assets/images/lang/translation.svg`" class="mx-auto w-full max-w-[280px] dark:hidden" alt="illustration" />
-                <img :src="`/assets/images/lang/translation-dark.svg`" class="mx-auto hidden w-full max-w-[280px] dark:block" alt="illustration" />
+                <img :src="`/assets/images/lang/translation.svg`" class="mx-auto w-full max-w-[] dark:hidden" alt="illustration" />
+                <img :src="`/assets/images/lang/translation-dark.svg`" class="mx-auto hidden w-full max-w-[] dark:block" alt="illustration" />
             </div>
         </div>
 

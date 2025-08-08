@@ -5,7 +5,7 @@
 
     <div 
     :class="[
-        sidebar === true ? 'lg:ml-[65px]' : 'lg:ml-[280px]',
+        sidebar === true ? 'lg:ml-[65px]' : '',
     ]"
     class="lg:mt-[65px] sm:mt-[25px] mt-[55px]">
 

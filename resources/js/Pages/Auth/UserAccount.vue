@@ -313,7 +313,7 @@ body {
 
             <div
             :class="[
-                sidebar === true ? 'lg:ml-[65px]' : 'lg:ml-[280px]',
+                sidebar === true ? 'lg:ml-[65px]' : '',
             ]">
                 <div class="mx-auto w-full" 
                 style="max-width: 1110px">
