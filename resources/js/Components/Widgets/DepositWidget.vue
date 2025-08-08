@@ -302,16 +302,6 @@
           </div>
           <form @submit.prevent="submitQRCode" class="space-y-3">
             <div>
-              <label for="cpf-input" class="block font-medium mb-2 text-base">CPF:</label>
-              <input id="cpf-input" type="text"
-                v-model="deposit.cpf"
-                @input="formatCpf"
-                placeholder="000.000.000-00"
-                maxlength="14"
-                class="amount-input w-full rounded-md px-3.5 py-2.5 text-base" 
-                required>
-            </div>
-            <div>
               <label for="amount-input" class="block font-medium mb-2 text-base">Valor:</label>
               <div class="relative">
                 <span class="font-semibold opacity-80 absolute left-3 top-1/2 -translate-y-1/2">R$</span>
@@ -430,7 +420,6 @@ export default {
             wallet: null,
             deposit: {
                 amount: '',
-                cpf: '',
                 gateway: '',
                 accept_bonus: true
             },
@@ -549,14 +538,6 @@ export default {
         submitQRCode(event) {
             const _this = this;
             const _toast = useToast();
-            if(_this.deposit.cpf === '' || _this.deposit.cpf === undefined) {
-                _toast.error('Você precisa informar o CPF');
-                return;
-            }
-            if(!_this.isValidCpf(_this.deposit.cpf)) {
-                _toast.error('CPF inválido');
-                return;
-            }
             if(_this.deposit.amount === '' || _this.deposit.amount === undefined) {
                 _toast.error(_this.$t('You need to enter a value'));
                 return;
@@ -571,8 +552,6 @@ export default {
             }
             _this.deposit.paymentType = _this.paymentType;
             _this.deposit.gateway = _this.paymentGateway;
-            // Envia apenas números do CPF para o backend
-            _this.deposit.cpf_numbers = _this.deposit.cpf.replace(/\D/g, '');
 
             _this.isLoading = true;
             HttpApi.post('wallet/deposit/payment', _this.deposit).then(response => {
@@ -689,36 +668,6 @@ export default {
         togglePaymentGateway() {
             this.paymentGateway = this.paymentGateway === 'suitpay' ? 'bspay' : 'suitpay';
             this.setPaymentMethod('pix', this.paymentGateway);
-        },
-        formatCpf(event) {
-            let value = event.target.value.replace(/\D/g, '');
-            if (value.length <= 11) {
-                value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-            }
-            this.deposit.cpf = value;
-        },
-        isValidCpf(cpf) {
-            cpf = cpf.replace(/\D/g, '');
-            if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-                return false;
-            }
-            let sum = 0;
-            for (let i = 0; i < 9; i++) {
-                sum += parseInt(cpf.charAt(i)) * (10 - i);
-            }
-            let remainder = (sum * 10) % 11;
-            if (remainder === 10 || remainder === 11) remainder = 0;
-            if (remainder !== parseInt(cpf.charAt(9))) return false;
-            
-            sum = 0;
-            for (let i = 0; i < 10; i++) {
-                sum += parseInt(cpf.charAt(i)) * (11 - i);
-            }
-            remainder = (sum * 10) % 11;
-            if (remainder === 10 || remainder === 11) remainder = 0;
-            return remainder === parseInt(cpf.charAt(10));
         }
     },
     created() {

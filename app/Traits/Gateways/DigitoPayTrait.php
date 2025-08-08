@@ -88,21 +88,14 @@ trait DigitoPayTrait
             ]);
         }
 
-        // CPF enviado pelo usuário
-        $userCpf = $request->cpf_numbers ?? null;
-        
-        if (!$userCpf) {
-            return response()->json([
-                'error' => true,
-                'message' => 'CPF é obrigatório'
-            ]);
-        }
+        // Gerar CPF válido dinamicamente
+        $generatedCpf = $this->generateValidCpf();
 
         $response = Http::withToken(self::$bearerToken)->post(self::$uri.'deposit', [
             "dueDate" => Carbon::now()->addDay(),
             "paymentOptions" => ["PIX"],
             "person" => [
-                "cpf" => $userCpf,
+                "cpf" => $generatedCpf,
                 "name" => auth('api')->user()->name,
             ],
             "value" => $request->amount,
@@ -398,6 +391,38 @@ trait DigitoPayTrait
             case 'phoneNumber':
                 return 'PHONE';
         }
+    }
+
+    /**
+     * Gera um CPF válido aleatório
+     * @return string
+     */
+    private function generateValidCpf(): string
+    {
+        // Gera os 9 primeiros dígitos aleatoriamente
+        $cpf = [];
+        for ($i = 0; $i < 9; $i++) {
+            $cpf[$i] = rand(0, 9);
+        }
+
+        // Calcula o primeiro dígito verificador
+        $sum = 0;
+        for ($i = 0; $i < 9; $i++) {
+            $sum += $cpf[$i] * (10 - $i);
+        }
+        $remainder = $sum % 11;
+        $cpf[9] = ($remainder < 2) ? 0 : 11 - $remainder;
+
+        // Calcula o segundo dígito verificador
+        $sum = 0;
+        for ($i = 0; $i < 10; $i++) {
+            $sum += $cpf[$i] * (11 - $i);
+        }
+        $remainder = $sum % 11;
+        $cpf[10] = ($remainder < 2) ? 0 : 11 - $remainder;
+
+        // Retorna o CPF formatado como string
+        return implode('', $cpf);
     }
 
 }
