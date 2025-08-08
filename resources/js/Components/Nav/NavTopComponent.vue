@@ -154,7 +154,7 @@ button,
   ]"
 >
     <div class="relative px-3 py-3 lg:px-5 lg:pl-3 nav-menu" style="background-image:linear-gradient(to right, var(--ci-gray-medium), var(--ci-gray-over));">
-      <div :class="[ sidebar === true ? 'lg:ml-[65px]' : 'lg:ml-[280px]' ]">
+      <div :class="[ sidebar === true ? 'lg:ml-[65px] lg:mr-[65px]' : 'lg:ml-[280px] lg:mr-[280px]' ]">
         <div class="w-full mx-auto" style="max-width: 1110px">
           <div class="flex items-center justify-between" style="align-items: center">
             <div class="flex items-center justify-start" style="align-items: center">
