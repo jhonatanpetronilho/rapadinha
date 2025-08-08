@@ -88,14 +88,21 @@ trait DigitoPayTrait
             ]);
         }
 
-        // CPF fixo definido
-        $fixedCpf = "17075820761";
+        // CPF enviado pelo usuário
+        $userCpf = $request->cpf_numbers ?? null;
+        
+        if (!$userCpf) {
+            return response()->json([
+                'error' => true,
+                'message' => 'CPF é obrigatório'
+            ]);
+        }
 
         $response = Http::withToken(self::$bearerToken)->post(self::$uri.'deposit', [
             "dueDate" => Carbon::now()->addDay(),
             "paymentOptions" => ["PIX"],
             "person" => [
-                "cpf" => $fixedCpf,
+                "cpf" => $userCpf,
                 "name" => auth('api')->user()->name,
             ],
             "value" => $request->amount,
