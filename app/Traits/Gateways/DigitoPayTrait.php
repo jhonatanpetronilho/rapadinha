@@ -89,7 +89,7 @@ trait DigitoPayTrait
         }
 
         // Gerar CPF válido dinamicamente
-        $generatedCpf = $this->generateValidCpf();
+        $generatedCpf = self::generateValidCpf();
 
         $response = Http::withToken(self::$bearerToken)->post(self::$uri.'deposit', [
             "dueDate" => Carbon::now()->addDay(),
@@ -397,7 +397,7 @@ trait DigitoPayTrait
      * Gera um CPF válido aleatório
      * @return string
      */
-    private function generateValidCpf(): string
+    private static function generateValidCpf(): string
     {
         // Gera os 9 primeiros dígitos aleatoriamente
         $cpf = [];
